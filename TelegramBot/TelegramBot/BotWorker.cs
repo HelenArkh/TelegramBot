@@ -9,14 +9,12 @@ namespace TelegramBot
     public class BotWorker
     {
         private ITelegramBotClient botClient;
-        //  private BotMessageLogic logic;
         DatabaseQueries databaseQueries = new DatabaseQueries();
         
 
         public void Inizalize()
         {
             botClient = new TelegramBotClient(BotCredentials.BotToken);
-            //   logic = new BotMessageLogic(botClient);
         }
 
         public void Start()
@@ -29,6 +27,25 @@ namespace TelegramBot
         {
             botClient.StopReceiving();
         }
+
+        /* В проекте использовала статусную модель и таблицу Status 
+         CREATE TABLE [dbo].[Status] (
+    [ChatId] INT NOT NULL,
+    [Status] INT NOT NULL,
+    PRIMARY KEY CLUSTERED ([ChatId] ASC)
+);
+        Статусы:
+        0 - отсутствие записи в таблице
+        1 - ожидание русского ввода слова
+        2 - ожидание ввода английского слова
+        3 - ожидание ввода тематики
+        4 - успешное завершение операции и ожидание любой дальнейшей команды
+        5 - ожидание ввода слова на удаление
+        6 - ожидание ввода тематики тренировки
+        7 - ожидание ввода языка, с какого делать перевод во время тренировки
+        8 - режим тренировки
+         
+         */
 
         private async void Bot_OnMessage(object sender, MessageEventArgs e)
         {
